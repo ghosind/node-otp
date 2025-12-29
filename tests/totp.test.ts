@@ -69,6 +69,19 @@ describe('test TOTP generate', () => {
     code = await totp.generate(secret, 20000000000);
     expect(code).toBe('47863826');
   });
+
+  test('test TOTP with current time', async () => {
+    // This test case may fail if the code generation crosses a time step boundary.
+    const totp = new TOTP();
+
+    const secret = '12345678901234567890';
+
+    const code = await totp.generate(secret);
+    expect(code).toHaveLength(6);
+
+    const isValid = await totp.verify(secret, code);
+    expect(isValid).toBe(true);
+  });
 });
 
 describe('test TOTP verify', () => {
