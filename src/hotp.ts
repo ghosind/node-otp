@@ -36,9 +36,11 @@ export class HOTP extends OTP {
    * @returns The generated OTP URI as a string.
    */
   getURI(secret: string, accountName: string, counter?: number): string {
-    const params: Record<string, string> = {
-      counter: (counter || 0).toString(),
-    };
+    const params: Record<string, string> = {};
+
+    if (counter !== undefined) {
+      params['counter'] = counter.toString();
+    }
 
     return this.buildURI('hotp', secret, accountName, params);
   }

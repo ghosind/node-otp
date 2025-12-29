@@ -79,7 +79,10 @@ describe('test HOTP URI generation', () => {
     const hotp = new HOTP({ issuer: 'ExampleIssuer' });
     const secret = '12345678901234567890';
 
-    let uri = hotp.getURI(secret, 'user@example.com', 0);
+    let uri = hotp.getURI(secret, 'user@example.com');
+    expect(uri).toBe('otpauth://hotp/ExampleIssuer:user%40example.com?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=ExampleIssuer');
+
+    uri = hotp.getURI(secret, 'user@example.com', 0);
     expect(uri).toBe('otpauth://hotp/ExampleIssuer:user%40example.com?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=ExampleIssuer&counter=0');
   });
 });
